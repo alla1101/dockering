@@ -2,6 +2,6 @@ FROM httpd:2.4
 
 WORKDIR /app
 
-ADD code /app
+COPY ./code/ /usr/local/apache2/htdocs/
 
 EXPOSE 80
