@@ -1,0 +1,80 @@
+#cmd : 
+
+docker run -d \
+--volume /var/lib/cassandra/data \
+--name cass-shared \
+alpine echo Data Container
+
+#to create a volume container, will stop immediately
+
+#cmd :
+
+docker run -d \
+--volumes-from cass-shared \
+--name cass1 \
+cassandra:2.2
+
+#to inherit volume definitions, now both containers have a volume mounted
+
+#cmd :
+
+docker run --link cass1:cass -it --rm cassandra:2.2 cqlsh cass
+
+#to start a container from the cassan-
+dra:2.2 image, but run a Cassandra client tool and connect to your running server
+
+#cmd : 
+
+select *
+from system.schema_keyspaces
+where keyspace_name = 'docker_hello_world';
+
+#returns nothing
+
+#cod :
+
+create keyspace docker_hello_world
+with replication = {
+'class' : 'SimpleStrategy',
+'replication_factor': 1
+};
+
+select *
+from system.schema_keyspaces
+where keyspace_name = 'docker_hello_world';
+
+#returns one result
+
+#cmds:
+
+quit
+#will destroy the current container(--rm)
+
+docker stop cass1
+
+docker rm -vf cass1
+#to destroy the container with its associated volume (-v, -f for force)
+
+#cmd :
+
+docker run -d \
+--volumes-from cass-shared \
+--name cass2 \
+cassandra:2.2
+
+#to inherit volume definitions, now both containers have a volume mounted
+
+#cmd :
+
+docker run --link cass2:cass -it --rm cassandra:2.2 cqlsh cass
+
+#to start a container from the cassan-
+dra:2.2 image, but run a Cassandra client tool and connect to your running server
+
+#cmd : 
+
+select *
+from system.schema_keyspaces
+where keyspace_name = 'docker_hello_world';
+
+#returns the result we had in container cass1 which we deleted !!
