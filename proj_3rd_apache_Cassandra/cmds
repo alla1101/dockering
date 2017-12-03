@@ -78,3 +78,5 @@ from system.schema_keyspaces
 where keyspace_name = 'docker_hello_world';
 
 #returns the result we had in container cass1 which we deleted !!
+
+#what happened in simple terms is that we created a volume, linked it to multiple containers, changed some data using the other containers, deleted them then created containers connected to the volume to find the data intact, and to show the might and power of docker lol.
